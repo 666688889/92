@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>欢迎使用TRC20检测系统</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #status {
+      margin-top: 15px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>欢迎使用TRC20检测系统</h1>
+  <button onclick="connectWallet()">连接钱包</button>
+  <button onclick="goToTransferPage()">转账</button>
+  <div id="status">钱包状态：未连接</div>
+
+  <script>
+    function waitForTronWeb(callback) {
+      const check = () => {
+        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+          callback();
+        } else {
+          setTimeout(check, 500);
+        }
+      };
+      check();
+    }
+
+    function connectWallet() {
+      waitForTronWeb(() => {
+        const address = window.tronWeb.defaultAddress.base58;
+        document.getElementById("status").innerText = "钱包状态：已连接 - " + address;
+        alert("钱包已连接: " + address);
+      });
+    }
+
+    function goToTransferPage() {
+      window.location.href = "transfer.html";
+    }
+  </script>
+</body>
+</html>

